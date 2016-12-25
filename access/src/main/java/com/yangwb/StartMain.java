@@ -22,7 +22,6 @@ public class StartMain
             InputStream in = connect.getInputStream();
             System.out.println(in.read());
 //            OutputStream out = connect.getOutputStream();
-
         } catch (IOException e)
         {
             e.printStackTrace();

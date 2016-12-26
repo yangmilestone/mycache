@@ -11,7 +11,10 @@ public class StartMain
 {
     public static void main(String[] args)
     {
-        //todo 研究  ServerSocket  Socket InputStream  OutputStream api
+        /**
+         * todo bio方式实现内核，先实现c/s结构外壳，使其稳定正常通信
+         * todo 其次，实现接受数据的业务逻辑，接受命令，发送给redis
+         */
         while (true)
         {
             pullData();

@@ -11,8 +11,23 @@ public class ClientTest
 {
     public static void main(String[] args) throws IOException
     {
-        other();
-        //        test();
+        //        other();
+        new Thread(new Runnable()
+        {
+            @Override
+            public void run()
+            {
+                other();
+            }
+        }).start();
+        new Thread(new Runnable()
+        {
+            @Override
+            public void run()
+            {
+                other();
+            }
+        }).start();
 
     }
 
@@ -43,27 +58,32 @@ public class ClientTest
         }
     }
 
-    private static void other() throws IOException
+    private static void other()
     {
-        Socket socket = new Socket("127.0.0.1", 8888);
+        Socket socket = null;
         try
         {
+            socket = new Socket("127.0.0.1", 3650);
             InputStreamReader reader = new InputStreamReader(socket.getInputStream());
             for (int i = reader.read(); i != -1; i = reader.read())
             {
                 System.out.print((char) i);
             }
+            System.out.println("hahahh");
         } catch (Exception e)
         {
-            throw new RuntimeException(e);
+            e.printStackTrace();
         } finally
         {
             try
             {
-                socket.close();
+                if ( socket != null )
+                {
+                    socket.close();
+                }
             } catch (IOException e)
             {
-
+                e.printStackTrace();
             }
         }
     }

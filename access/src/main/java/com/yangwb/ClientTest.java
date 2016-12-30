@@ -12,7 +12,7 @@ public class ClientTest
     public static void main(String[] args) throws IOException
     {
         //        other();
-        new Thread(new Runnable()
+       /* new Thread(new Runnable()
         {
             @Override
             public void run()
@@ -27,7 +27,8 @@ public class ClientTest
             {
                 other();
             }
-        }).start();
+        }).start();*/
+        test();
 
     }
 
@@ -35,19 +36,27 @@ public class ClientTest
     {
         try
         {
-            Socket s = new Socket("127.0.0.1", 8888);
+            Socket s = new Socket("192.168.40.130", 56501);
             //构建IO
             InputStream is = s.getInputStream();
             OutputStream os = s.getOutputStream();
 
             BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(os));
             //向服务器端发送一条消息
-            bw.write("测试客户端和服务器通信，服务器接收到消息返回到客户端");
+ /*           bw.write("*3\r\n");
+            bw.write("$3\r\n");
+            bw.write("SET\r\n");
+            bw.write("$5\r\n");
+            bw.write("HENRY\r\n");
+            bw.write("$8\r\n");
+            bw.write("HENRYFAN\r\n");*/
+            bw.write("set haha haha \r\n");
             bw.flush();
 
             //读取服务器返回的消息
             BufferedReader br = new BufferedReader(new InputStreamReader(is));
             String mess = br.readLine();
+//             mess = br.readLine();
             System.out.println("服务器：" + mess);
         } catch (UnknownHostException e)
         {

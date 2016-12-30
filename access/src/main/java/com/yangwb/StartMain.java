@@ -33,7 +33,7 @@ public class StartMain
             while (true)
             {
                 Socket connect = server.accept();
-                pool.submit(new SendDataThread(connect));//todo 有问题 研究线程池
+                pool.submit(new SendDataThread(connect));
             }
         } catch (IOException e)
         {
@@ -49,17 +49,11 @@ public class StartMain
         {
             this.connect = connect;
         }
-
         @Override
         public void run()
         {
             try
             {
-                for (int i = 0; i < 5000; i++)
-                {
-                    System.out.print(i + ",");
-                }
-                System.out.println();
                 logger.debug("准备接受连接");
                 OutputStream out = connect.getOutputStream();
                 BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(out));

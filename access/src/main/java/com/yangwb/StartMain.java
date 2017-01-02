@@ -3,10 +3,8 @@ package com.yangwb;
 
 import org.apache.log4j.Logger;
 
-import java.io.BufferedWriter;
 import java.io.IOException;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
+import java.io.InputStreamReader;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.concurrent.ExecutorService;
@@ -49,17 +47,36 @@ public class StartMain
         {
             this.connect = connect;
         }
+
         @Override
         public void run()
         {
             try
             {
-                logger.debug("准备接受连接");
+       /*         logger.debug("准备接受连接");
                 OutputStream out = connect.getOutputStream();
                 BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(out));
                 writer.write("hello,I am server!who are u?");
                 writer.flush();
-                logger.debug("已经发送数据");
+                logger.debug("已经发送数据");*/
+                //                Connection connection = new Connection("192.168.96.128", 56501);
+                //// TODO: 对接
+                //                connection.connect();
+                //                Protocol.sendCommand(outputStream, cmd, args);
+                /*
+                *3
+                $3
+                SET
+                $4
+                test
+                $5
+                test1
+                 */
+                InputStreamReader reader = new InputStreamReader(connect.getInputStream());
+                for (int i = reader.read(); i != -1; i = reader.read())
+                {
+                    System.out.print((char) i);
+                }
             } catch (Exception e)
             {
                 e.printStackTrace();

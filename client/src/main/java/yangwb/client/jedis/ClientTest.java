@@ -1,4 +1,4 @@
-package com.yangwb;
+package yangwb.client.jedis;
 
 import java.io.*;
 import java.net.Socket;
@@ -11,7 +11,7 @@ public class ClientTest
 {
     public static void main(String[] args) throws IOException
     {
-        //        other();
+        other();
        /* new Thread(new Runnable()
         {
             @Override
@@ -28,7 +28,7 @@ public class ClientTest
                 other();
             }
         }).start();*/
-        test();
+        //        test();
 
     }
 
@@ -56,7 +56,7 @@ public class ClientTest
             //读取服务器返回的消息
             BufferedReader br = new BufferedReader(new InputStreamReader(is));
             String mess = br.readLine();
-//             mess = br.readLine();
+            //             mess = br.readLine();
             System.out.println("服务器：" + mess);
         } catch (UnknownHostException e)
         {
@@ -74,11 +74,15 @@ public class ClientTest
         {
             socket = new Socket("127.0.0.1", 3650);
             InputStreamReader reader = new InputStreamReader(socket.getInputStream());
-            for (int i = reader.read(); i != -1; i = reader.read())
-            {
-                System.out.print((char) i);
-            }
-            System.out.println("hahahh");
+            OutputStreamWriter writer = new OutputStreamWriter(socket.getOutputStream());
+            writer.write("这边是客户端");
+            writer.flush();
+            char[] buff = new char[1024];
+            int b =reader.read(buff);
+            System.out.println(b);
+            System.out.println(String.valueOf(buff));
+            writer.close();
+            reader.close();
         } catch (Exception e)
         {
             e.printStackTrace();
@@ -90,7 +94,7 @@ public class ClientTest
                 {
                     socket.close();
                 }
-            } catch (IOException e)
+            } catch (Exception e)
             {
                 e.printStackTrace();
             }

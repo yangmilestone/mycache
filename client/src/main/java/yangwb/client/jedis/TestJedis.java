@@ -1,4 +1,4 @@
-package com.yangwb;
+package yangwb.client.jedis;
 
 import redis.clients.jedis.Jedis;
 

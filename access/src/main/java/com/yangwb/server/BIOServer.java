@@ -3,6 +3,7 @@ package com.yangwb.server;
 import com.util.ConfigUtil;
 import com.util.KeyHash;
 import org.apache.log4j.Logger;
+import redis.clients.jedis.Client;
 import redis.clients.jedis.Protocol;
 import redis.clients.util.RedisInputStream;
 import redis.clients.util.RedisOutputStream;
@@ -26,15 +27,20 @@ public class BIOServer extends AccessServer
 {
     private static Logger logger = Logger.getLogger(BIOServer.class);
 
+    private int poolSize;
+
+    public BIOServer(int poolSize ,int port)
+    {
+        super(port);
+        this.poolSize = poolSize;
+    }
+
+
     @Override
     public void start()
     {
-        ExecutorService pool = Executors.newFixedThreadPool(50);
-        /**
-         * todo bio方式实现内核，先实现c/s结构外壳，使其稳定正常通信
-         * todo 其次，实现接受数据的业务逻辑，接受命令， 发送给redis
-         */
-        try (ServerSocket server = new ServerSocket(3650))
+        ExecutorService pool = Executors.newFixedThreadPool(poolSize);
+        try (ServerSocket server = new ServerSocket(port))
         {
             logger.debug("服务器已经启动！");
             while (true)
@@ -63,7 +69,6 @@ public class BIOServer extends AccessServer
         {
             try
             {
-
                 System.out.println("进run方法了");
                 while (true)
                 {
@@ -92,13 +97,18 @@ public class BIOServer extends AccessServer
                             if ( cmd.get(0).equals("SET") )
                             {
                                 String key = cmd.get(1);
+                                System.out.println(key);
                                 int slot = KeyHash.keyHashSlot(key.getBytes(), key.length());
                                 int port = ConfigUtil.getPortBySlot(slot);
-//                                String host = getHost(slot);
-//                                Jedis jedis = new Jedis()
+                                String host = ConfigUtil.getHostByPort(port);
+                                System.out.println(host+":"+port);
+                                Client client = new Client(host, port);
+                                client.set(cmd.get(1), cmd.get(2));
+                                System.out.println(client.getStatusCodeReply());
+                                ros.writeUtf8CrLf("+ok");
+                                ros.flush();
                             }
-                        } ros.writeUtf8CrLf("+ok");
-                        ros.flush();
+                        }
                     } catch (Exception e)
                     {
                         break;

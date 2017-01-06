@@ -25,11 +25,11 @@ public class StartMain
     {
         if ( type.equals(Contans.Model.BIO) )
         {
-            return new BIOServer();
+            return new BIOServer(Contans.POOL_SIZE,Contans.SERVER_PORT);
         }
         else
         {
-            return new NIOServer();
+            return new NIOServer(Contans.SERVER_PORT);
         }
     }
 }

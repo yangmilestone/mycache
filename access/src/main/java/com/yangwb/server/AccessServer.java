@@ -8,5 +8,11 @@ package com.yangwb.server;
  */
 public abstract class AccessServer
 {
+    protected int port;
+    public AccessServer(int port)
+    {
+        this.port = port;
+    }
+
     public abstract void start();
 }

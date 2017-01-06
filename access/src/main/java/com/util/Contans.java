@@ -15,21 +15,17 @@ public final class Contans
     {
         NIO, BIO;
     }
-
-    public static Map<Integer, Map<String, Integer>> slotMapping = new HashMap<>();
+    public static Map<Integer, Integer[]> slotMapping = new HashMap<>();
     public static Map<Integer, String > redisUrlMapping = new HashMap<>();
 
     static
     {
-        Map<String, Integer> redis503 = new HashMap<>();
-        redis503.put("start", 0);
-        redis503.put("end", 8192);
-        slotMapping.put(56503, redis503);
-        Map<String, Integer> redis501 = new HashMap<>();
-        redis501.put("start", 8193);
-        redis501.put("end", 16384);
-        slotMapping.put(56501, redis501);
-        redisUrlMapping.put(56501, "192.168.40.128");
-        redisUrlMapping.put(56503, "192.168.40.128");
+        slotMapping.put(56503, new Integer[]{0,8192});
+        slotMapping.put(56501, new Integer[]{8193,16384});
+        redisUrlMapping.put(56501, "192.168.40.129");
+        redisUrlMapping.put(56503, "192.168.40.129");
     }
+
+    public final static int SERVER_PORT = 3650;
+    public final static int POOL_SIZE = 50;
 }

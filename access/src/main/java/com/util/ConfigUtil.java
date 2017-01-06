@@ -13,15 +13,20 @@ public class ConfigUtil
 
     public static int getPortBySlot(int slot)
     {
-        Map<Integer,Map<String,Integer>> map = Contans.slotMapping;
-        for (Integer integer : map.keySet())
+        Map<Integer,Integer[]> map = Contans.slotMapping;
+        for (Integer port : map.keySet())
         {
-            int port = integer;
-            for (String s : map.get(integer).keySet())
+            if ( Math.max(slot, map.get(port)[0]) == Math.min(slot, map.get(port)[1]) )
             {
-                //// TODO: 2017/1/5  
+                return port;
             }
+
         }
-        return 0;
+        throw new RuntimeException("找不到对应槽段的端口");
+    }
+
+    public static String getHostByPort(int port)
+    {
+        return Contans.redisUrlMapping.get(port);
     }
 }

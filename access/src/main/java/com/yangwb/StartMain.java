@@ -13,7 +13,7 @@ import org.apache.log4j.Logger;
 public class StartMain
 {
     private static Logger logger = Logger.getLogger(StartMain.class);
-    private static Contans.Model type = Contans.Model.BIO;
+    private static Contans.Model type = Contans.Model.NIO;
 
     public static void main(String[] args)
     {

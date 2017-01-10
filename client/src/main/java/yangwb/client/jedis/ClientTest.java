@@ -78,7 +78,7 @@ public class ClientTest
             writer.write("这边是客户端");
             writer.flush();
             char[] buff = new char[1024];
-            int b =reader.read(buff);
+            int b = reader.read(buff);
             System.out.println(b);
             System.out.println(String.valueOf(buff));
             writer.close();

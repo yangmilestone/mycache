@@ -42,7 +42,7 @@ public class BIOServer extends AccessServer
         ExecutorService pool = Executors.newFixedThreadPool(poolSize);
         try (ServerSocket server = new ServerSocket(port))
         {
-            logger.debug("服务器已经启动！");
+            logger.debug("BIO服务器已经启动！端口号："+port);
             while (true)
             {
                 Socket connect = server.accept();
